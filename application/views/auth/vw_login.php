@@ -49,8 +49,8 @@
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" class="btn btn-success btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="<?= base_url('Auth/register')?>" class="link-danger">Register</a></p>
+                        <button type="submit" class="btn btn-success btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Sign In</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="<?= base_url('Auth/register')?>" class="link-danger">Sign Up</a></p>
                     </div>
 
                 </form>
