@@ -81,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div id="container">
 	<h1>Welcome to CodeIgniter!</h1>
 
-	<div id="body">
+	<div id="body">yf
 		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
 		<p>If you would like to edit this page you'll find it located at:</p>
@@ -94,7 +94,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?>
-<a  <a class="nav-link"href="<?= base_url('Auth/logout')?>">logout</a>
+<a  class="nav-link"href="<?= base_url('Auth/logout')?>">logout</a>
 </p>
 </div>
 

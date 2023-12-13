@@ -8,4 +8,17 @@ class Welcome extends CI_Controller {
 		$this->load->view('landingPage/tampilan');
 		$this->load->view('layout/landingPage/footer');
 	}
+
+	public function jadwal(){
+		$this->load->view('layout/landingPage/header');
+		$this->load->view('landingPage/jadwal');
+		$this->load->view('layout/landingPage/footer');
+	}
+	public function harga(){
+		$this->load->view('layout/landingPage/header');
+		$this->load->view('landingPage/Harga');
+		$this->load->view('layout/landingPage/footer');
+	}
+	
 }
+

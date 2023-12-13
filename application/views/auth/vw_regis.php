@@ -8,7 +8,7 @@
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <form method="POST" class="needs-validation" action="">
                 <div class="text-center fw-bold mx-3 mb-0">
-                        <p class="lead fw-normal mb-0" style="font-size: 30px;">Sign Up</p>
+                        <p class="lead fw-normal mb-0" style="font-size: 30px;">Registrasi</p>
 
                        
                     </div>
@@ -77,8 +77,8 @@
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" class="btn btn-success btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Sign Up</button>
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Have an account? <a href="<?= base_url('Auth')?>" class="link-danger">Sign In</a></p>
+                        <button type="submit" class="btn btn-success btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Have an account? <a href="<?= base_url('Auth')?>" class="link-danger">Login</a></p>
                     </div>
 
                 </form>

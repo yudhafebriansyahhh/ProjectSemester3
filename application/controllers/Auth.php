@@ -97,18 +97,18 @@ class Auth extends CI_Controller
     if ($admin) {
       // Periksa password tanpa menggunakan password hash
       if ($password == $admin['password']) {
-          $data = [
-              'email' => $admin['email'],
-              'id_admin' => $admin['id_admin'],
-          ];
-          $this->session->set_userdata($data);
-          redirect('Admin');
+        $data = [
+          'email' => $admin['email'],
+          'id_admin' => $admin['id_admin'],
+        ];
+        $this->session->set_userdata($data);
+        redirect('Admin');
       } else {
-          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Salah!</div>');
-          redirect('Auth');
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Salah!</div>');
+        redirect('Auth');
       }
-  }
-  
+    }
+
 
     // Cek di tabel 'nasabah'
     $nasabah = $this->db->get_where('nasabah', ['email' => $email])->row_array();

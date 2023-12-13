@@ -21,6 +21,7 @@
   <script src="<?= base_url('assets')?>/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="<?= base_url('assets')?>/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="<?= base_url('assets')?>/vendor/php-email-form/validate.js"></script>
+  
 
   <!-- Template Main JS File -->
   <script src="<?= base_url('assets')?>/js/main.js"></script>
