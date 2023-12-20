@@ -51,9 +51,9 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href=<?= site_url('Welcome/')?>>Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="#contact">History</a></li>
+          <li><a class="nav-link scrollto" href="#services">Saldo</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Lokasi</a></li>
           <li><a class="getstarted scrollto" href="<?= base_url('Auth')?>">Login</a></li>
           <li><a class="getstarted scrollto" href="<?= base_url('Auth/logout')?>">Log out</a></li>
         </ul>
