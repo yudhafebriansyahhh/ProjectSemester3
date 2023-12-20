@@ -16,7 +16,7 @@ class Welcome extends CI_Controller {
 	}
 	public function harga(){
 		$this->load->view('layout/landingPage/header');
-		$this->load->view('landingPage/Harga');
+		$this->load->view('landingPage/harga');
 		$this->load->view('layout/landingPage/footer');
 	}
 	public function Point(){
