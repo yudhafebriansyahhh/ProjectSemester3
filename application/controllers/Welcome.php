@@ -19,6 +19,10 @@ class Welcome extends CI_Controller {
 		$this->load->view('landingPage/Harga');
 		$this->load->view('layout/landingPage/footer');
 	}
-	
+	public function Point(){
+		$this->load->view('layout/landingPage/header');
+		$this->load->view('landingPage/point');
+		$this->load->view('layout/landingPage/footer');
+	}	
 }
 

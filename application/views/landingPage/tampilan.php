@@ -69,7 +69,7 @@
           <div class="col-lg-4 col-md-6">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-briefcase"></i></div>
-              <h4 class="title"><a href="">Dolor Sitema</a></h4>
+              <h4 class="title"><a href="<?= site_url('welcome/point')?>">Point</a></h4>
               <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
             </div>
           </div>
