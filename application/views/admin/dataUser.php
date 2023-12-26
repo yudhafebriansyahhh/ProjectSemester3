@@ -8,6 +8,7 @@
                 <!-- Bootstrap Table with Header - Light -->
                 <div class="card">
                     <h5 class="card-header"><?php echo $judul; ?></h5>
+                    <a href="<?= base_url('admin/tambahdatauser'); ?>" class="btn btn-primary m-3" style="max-width: 200px; max-height: 200px;">Tambah User</a>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                             <thead class="table-light">
@@ -46,8 +47,10 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                                                <a class="dropdown-item" href="<?= base_url('admin/editDataUser/' . $us['id_nasabah']); ?>"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                <a class="dropdown-item" href="<?= base_url('admin/deleteDataUser/' . $us['id_nasabah']); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                                    <i class="bx bx-trash me-1"></i> Delete
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
