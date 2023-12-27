@@ -119,7 +119,7 @@ class Auth extends CI_Controller
           'id_nasabah' => $nasabah['id_nasabah'],
         ];
         $this->session->set_userdata($data);
-        redirect('Welcome'); // Ganti dengan halaman user yang sesuai
+        redirect('Nasabah'); 
       } else {
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Salah!</div>');
         redirect('Auth');

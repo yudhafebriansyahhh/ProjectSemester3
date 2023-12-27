@@ -5,7 +5,7 @@
   class="light-style layout-menu-fixed layout-compact"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="Admin/assets/"
+  data-assets-path="<?= base_url('assets')?>/Admin/assets/"
   data-template="vertical-menu-template-free">
   <head>
     <meta charset="utf-8" />
@@ -117,57 +117,16 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboards -->
-            <li class="menu-item active open">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <!-- <li class="menu-item">
+              <a href="cards-basic.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Cards</div>
+              </a> -->
+            <li class="menu-item active ">
+              <a href="<?= base_url("Nasabah")?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
-                <div class="badge bg-danger rounded-pill ms-auto">5</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a
-                    href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/dashboards-crm.html"
-                    target="_blank"
-                    class="menu-link">
-                    <div data-i18n="CRM">CRM</div>
-                    <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>
-                  </a>
-                </li>
-                <li class="menu-item active">
-                  <a href="index.html" class="menu-link">
-                    <div data-i18n="Analytics">Analytics</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a
-                    href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-ecommerce-dashboard.html"
-                    target="_blank"
-                    class="menu-link">
-                    <div data-i18n="eCommerce">eCommerce</div>
-                    <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a
-                    href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-logistics-dashboard.html"
-                    target="_blank"
-                    class="menu-link">
-                    <div data-i18n="Logistics">Logistics</div>
-                    <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a
-                    href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-academy-dashboard.html"
-                    target="_blank"
-                    class="menu-link">
-                    <div data-i18n="Academy">Academy</div>
-                    <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-
             <!-- Layouts -->
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -307,7 +266,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
+                  <a href="<?= base_url("assets")?>/Admin/html/pages-account-settings-account.html" class="menu-link">
                     <div data-i18n="Account">Account</div>
                   </a>
                 </li>
@@ -596,3 +555,93 @@
           </ul>
         </aside>
         <!-- / Menu -->
+        
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none ps-1 ps-sm-2"
+                    placeholder="Search..."
+                    aria-label="Search..." />
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                <li class="nav-item lh-1 me-3">
+                  <a
+                    class="github-button"
+                    href="https://github.com/themeselection/sneat-html-admin-template-free"
+                    data-icon="octicon-star"
+                    data-size="large"
+                    data-show-count="true"
+                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
+                    >Star</a
+                  >
+                </li>
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      <img src="<?= base_url('assets')?>/Admin/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              <img src="<?= base_url('assets')?>/Admin/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-medium d-block">John Doe</span>
+                            <small class="text-muted">Admin</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="<?= base_url("Nasabah/editProfile")?>">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="<?= base_url("Auth/logout")?>">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
