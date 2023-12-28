@@ -55,7 +55,7 @@
           <li><a class="nav-link scrollto" href="#services">Saldo</a></li>
           <li><a class="nav-link scrollto" href="#contact">Lokasi</a></li>
           <li><a class="getstarted scrollto" href="<?= base_url('Auth')?>">Login</a></li>
-          <li><a class="getstarted scrollto" href="<?= base_url('Auth/logout')?>">Log out</a></li>
+
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
