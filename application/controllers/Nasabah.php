@@ -18,6 +18,14 @@ class Nasabah extends CI_Controller
     $this->load->view("layout/layoutNasabah/footer", $data);
   }
 
+  public function profile()
+  {
+    $data['judul'] = "Halaman Edit Profile";
+    $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/profile", $data);
+    $this->load->view("layout/layoutNasabah/footer", $data);
+  }
   public function editProfile()
   {
     $data['judul'] = "Halaman Edit Profile";
@@ -29,28 +37,30 @@ class Nasabah extends CI_Controller
 
   public function redeemPoints()
   {
-      $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
-      // Ambil ID nasabah dari session
-      $id = $this->session->userdata('id_nasabah');
-  
-      // Ambil nilai points_to_redeem dari formulir
-      $pointsToRedeem = $this->input->post('points_to_redeem');
-  
-      // Panggil fungsi redeemPoints dari model
-      $redeemResult = $this->Nasabah_model->redeemPoints($id, $pointsToRedeem);
-  
-      // Set pesan hasil redeeming untuk ditampilkan di view
-      if ($redeemResult) {
-          $data['redeem_message'] = "Poin berhasil ditukar menjadi saldo.";
-      } else {
-          $data['redeem_message'] = "Gagal menukar poin atau poin tidak mencukupi.";
-      }
-  
-      $this->load->view("layout/layoutNasabah/header", $data);
-      $this->load->view("nasabah/redeem", $data);
-      $this->load->view("layout/layoutNasabah/footer", $data);
+    $data['judul'] = "Halaman Redeem Point";
+    $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
+
+    // Ambil ID nasabah dari session
+    $id = $this->session->userdata('id_nasabah');
+
+    // Ambil nilai points_to_redeem dari formulir
+    $pointsToRedeem = $this->input->post('points_to_redeem');
+
+    // Panggil fungsi redeemPoints dari model
+    $redeemResult = $this->Nasabah_model->redeemPoints($id, $pointsToRedeem);
+
+    // Set pesan hasil redeeming untuk ditampilkan di view
+    if ($redeemResult) {
+      $this->session->set_flashdata('flash', ' melakukan redeem poin. Saldo Anda telah ditambahkan!');
+    } else {
+      $this->session->set_flashdata('flash', 'Gagal menukarkan poin atau poin tidak mencukupi.');
+
+    }
+
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/redeem", $data);
+    $this->load->view("layout/layoutNasabah/footer", $data);
   }
-  
 }
 
 

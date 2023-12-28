@@ -127,4 +127,3 @@
 
             <!-- Layout container -->
             <div class="layout-page">
-                

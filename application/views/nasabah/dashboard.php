@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-sm-6">
 
-                            <div class="card-body">
+                            <div class="card-body" style="height: 180px;">
 
                                 <h5 class="card-title text-primary">Selamat Datang, <?= $nasabah['nama']; ?> 🎉</h5>
                                 <p class="mb-4">
@@ -48,8 +48,7 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                            <a class="dropdown-item" href="<?=base_url("Nasabah/redeemPoints")?>">Details</a>
                                         </div>
                                     </div>
                                 </div>
@@ -85,12 +84,12 @@
                 </div>
             </div>
             <div class="col-md-8 mb-4 order-1">
-                <div class="card overflow-hidden mb-4" style="height: 300px">
+                <div class="card overflow-hidden mb-4" style="height: 375px">
                     <h5 class="card-header">History</h5>
-                    <div class="card-body ">
+                    <div class="card-body" id="vertical-example">
                         <div class="table-responsive text-nowrap">
                             <table class="table">
-                                <thead>
+                                <thead class="sticky-top">
                                     <tr>
                                         <th>Project</th>
                                         <th>Client</th>
