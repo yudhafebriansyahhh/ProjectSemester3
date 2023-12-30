@@ -10,10 +10,12 @@ class Nasabah extends CI_Controller
     $this->load->model('Nasabah_model');
     $this->load->model('Transaksi_model');
     $this->load->model('SetorSampah_model');
+    $this->load->model('Penjemputan_model');
   }
 
   public function index()
   {
+    $data['judul'] = 'Dashboard';
     $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
     $id = $this->session->userdata('id_nasabah');
     $data['histori'] = $this->SetorSampah_model->historisetorbyID($id);
@@ -225,20 +227,57 @@ class Nasabah extends CI_Controller
   //   $data['histori'] = $this->SetorSampah_model->historisetorbyID();
   // }
   #controller
-public function hapusAccount($id)
-{
+  public function hapusAccount($id)
+  {
     if ($this->input->post('accountActivation')) {
-        // Hapus akun jika checkbox dikonfirmasi
-        $this->Nasabah_model->delete($id);
-        $this->session->set_flashdata('flash', 'Account berhasil dihapus.');
-        redirect("Auth");
+      // Hapus akun jika checkbox dikonfirmasi
+      $this->Nasabah_model->delete($id);
+      $this->session->set_flashdata('flash', 'Account berhasil dihapus.');
+      redirect("Auth");
     } else {
-        // Tampilkan pesan bahwa checkbox belum dikonfirmasi
-        $this->session->set_flashdata('flash', 'Silakan konfirmasi penghapusan akun.');
-        redirect("Nasabah/hapus/" . $id);
+      // Tampilkan pesan bahwa checkbox belum dikonfirmasi
+      $this->session->set_flashdata('flash', 'Silakan konfirmasi penghapusan akun.');
+      redirect("Nasabah/hapus/" . $id);
     }
-}
+  }
 
+  public function dropPoint()
+  {
+    $data['judul'] = 'Lokasi Bank Sampah';
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/lokasi_pengantaran", $data);
+    $this->load->view("layout/layoutNasabah/footer", $data);
+  }
+
+  public function inputpenjemputan()
+  {
+    // Ambil id_nasabah dari sesi pengguna
+    $id_nasabah = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array()['id_nasabah'];
+
+    // Data yang akan disimpan
+    $data = [
+      "id_nasabah" => $id_nasabah,
+      "nama" => $this->input->post("nama"),
+      "alamat" => $this->input->post("alamat"),
+      "no_hp" => $this->input->post("no_hp"),
+    ];
+
+    // Panggil model untuk menyimpan data
+    $this->Penjemputan_model->insert($data);
+    $this->session->set_flashdata('flash', 'Penjemputan Sampah berhasil dipesan! Silahkan tunggu sampah di jemput dan poin anda akan di inputkan oleh admin');
+    redirect('Nasabah');
+  }
+
+
+  public function pesanpenjemputan()
+  {
+    $data['judul'] = "Pesan penjemputan";
+    $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
+    $this->Nasabah_model->get();
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/penjemputan", $data);
+    $this->load->view("layout/layoutNasabah/footer", $data);
+  }
 }
 
 

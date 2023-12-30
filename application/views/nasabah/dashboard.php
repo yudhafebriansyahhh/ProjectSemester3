@@ -9,21 +9,18 @@
             <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
             <div class="col-lg-8 mb-4 order-1">
                 <div class="card">
-
                     <div class="d-flex align-items-end row">
-                        <div class="col-md-3">
+                        <div class="col-md-2 mx-4">
                             <div class="card-body mb-3 d-flex justify-content-center">
                                 <div class="flex-shrink-0">
                                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                        <img src="<?= base_url('assets') ?>/img/profile/<?= $nasabah['gambar'] ?>" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
+                                        <img src="<?= base_url('assets') ?>/img/profile/<?= $nasabah['gambar'] ?>" alt="user-avatar" class="d-block rounded-circle" height="100" width="100" id="uploadedAvatar" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-
+                        <div class="col-sm-6"> <!-- Mengganti col-sm-6 menjadi col-sm-9 -->
                             <div class="card-body" style="height: 180px;">
-
                                 <h5 class="card-title text-primary mt-3">Selamat Datang, <?= $nasabah['nama']; ?> 🎉</h5>
                                 <p class="mb-4">
                                     Siap Menjaga <span class="fw-bold">Lingkungan? </span> Ayo kumpulkan lebih banyak sampah untuk didaur ulang dan dapatkan
@@ -31,10 +28,10 @@
                                 </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-4 col-md-4 order-1">
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-6 mb-4">
