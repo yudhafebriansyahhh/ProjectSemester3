@@ -41,7 +41,7 @@ class Sampah extends CI_Controller
 
         ];
         $this->Sampah_model->insert($data);
-        $this->session->set_flashdata('flash', 'Data berhasil ditambahkan.');
+        
         redirect('Sampah');
     }
 

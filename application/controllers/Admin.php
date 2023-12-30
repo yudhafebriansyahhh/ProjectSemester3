@@ -105,7 +105,7 @@ class Admin extends CI_Controller
       'id_admin' => $id_admin,
       'berat' => $berat,
       'poin' => $poin_baru,
-      'date' => date('Y-m-d H:i:s'), // Misalnya, tanggal saat ini
+      'date' => 'CURRENT_TIMESTAMP', // Misalnya, tanggal saat ini
     ];
 
     // Insert data ke dalam tabel insertpoin

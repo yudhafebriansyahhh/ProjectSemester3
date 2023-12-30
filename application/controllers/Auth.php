@@ -75,8 +75,12 @@ class Auth extends CI_Controller
         'email' => htmlspecialchars($this->input->post('email', true)),
         'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
         'alamat' => $this->input->post('alamat'),
-        'no_hp' => $this->input->post('no_hp'),
+        'no_hp' => $this->input->post('no_hp'),  
         'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+        'gambar' => 'default.png',
+        'saldo' => '0',
+        'poin' => '0',
+        'date_created' => 'CURRENT_TIMESTAMP',
 
       ];
       $this->Nasabah_model->insert($data);

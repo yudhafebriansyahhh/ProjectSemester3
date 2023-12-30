@@ -107,7 +107,7 @@
 
                         <li class="menu-item">
                             <a href="<?= base_url('auth/logout') ?>" target="_blank" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-support"></i>
+                                <i class="menu-icon tf-icons bx bx-power-off"></i>
                                 <div data-i18n="Support">Logout</div>
                             </a>
                         </li>

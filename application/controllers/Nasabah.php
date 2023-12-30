@@ -7,13 +7,16 @@ class Nasabah extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    $this->load->model("Nasabah_model");
+    $this->load->model('Nasabah_model');
     $this->load->model('Transaksi_model');
+    $this->load->model('SetorSampah_model');
   }
 
   public function index()
   {
     $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
+    $id = $this->session->userdata('id_nasabah');
+    $data['histori'] = $this->SetorSampah_model->historisetorbyID($id);
     $this->load->view("layout/layoutNasabah/header", $data);
     $this->load->view("nasabah/dashboard", $data);
     $this->load->view("layout/layoutNasabah/footer", $data);
@@ -21,7 +24,7 @@ class Nasabah extends CI_Controller
 
   public function profile()
   {
-    $data['judul'] = "Halaman Edit Profile";
+    $data['judul'] = "Halaman Profile";
     $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
     $this->load->view("layout/layoutNasabah/header", $data);
     $this->load->view("nasabah/profile", $data);
@@ -35,6 +38,58 @@ class Nasabah extends CI_Controller
     $this->load->view("nasabah/editProfile", $data);
     $this->load->view("layout/layoutNasabah/footer", $data);
   }
+
+  public function updateProfile()
+  {
+    $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
+
+    // Konfigurasi upload gambar
+    $config['upload_path']   = './assets/img/profile/';
+    $config['allowed_types'] = 'gif|jpg|png|jpeg|ico|jfif';
+    $config['max_size']      = 2048;
+
+    $this->load->library('upload', $config);
+
+    // Lakukan upload gambar hanya jika file gambar diunggah
+    if ($this->upload->do_upload('profile_picture')) {
+      $old_image = $data['nasabah']['gambar'];
+      if ($old_image != 'default.png') {
+        unlink(FCPATH . '/assets/img/profile/' . $old_image);
+      }
+
+      $data = $this->upload->data();
+      $file_name = $data['file_name'];
+    } else {
+      // Jika tidak ada file gambar yang diunggah, gunakan gambar lama
+      $file_name = $data['nasabah']['gambar'];
+    }
+
+    // Dapatkan data lain dari form
+    $nama = $this->input->post('nama');
+    $alamat = $this->input->post('alamat');
+    $jenis_kelamin = $this->input->post('jenis_kelamin');
+    $no_hp = $this->input->post('no_hp');
+    $email = $this->input->post('email');
+
+    // Update data dan nama file ke dalam database
+    $update_data = array(
+      'nama' => $nama,
+      'alamat' => $alamat,
+      'jenis_kelamin' => $jenis_kelamin,
+      'no_hp' => $no_hp,
+      'email' => $email,
+      'gambar' => $file_name,
+    );
+
+    // Panggil model untuk melakukan update
+    $this->Nasabah_model->update(array('id_nasabah' => $this->session->userdata('id_nasabah')), $update_data);
+
+    // Redirect atau tampilkan pesan sukses
+    $this->session->set_flashdata('flash', 'Profil berhasil diperbarui!');
+    redirect('Nasabah/editProfile');
+  }
+
+
 
   public function redeemPoints()
   {
@@ -105,7 +160,7 @@ class Nasabah extends CI_Controller
         'nomor' => $nomor,
         'jumlah_tarik' => $jumlah_tarik,
         'status' => 'Menunggu Pembayaran',
-        'date' => date('Y-m-d H:i:s')
+        'date' => 'CURRENT_TIMESTAMP',
       ];
       $this->Transaksi_model->insert($transaksi);
       // Redirect atau tampilkan pesan sukses
@@ -127,6 +182,16 @@ class Nasabah extends CI_Controller
     $this->load->view("layout/layoutNasabah/header", $data);
     $this->load->view("nasabah/history_penarikan", $data);  // Gantilah dengan nama view yang sesuai
     $this->load->view("layout/layoutNasabah/footer", $data);
+  }
+  // public function historySetor(){
+  //   $data['judul']='History Penyetoran Sampah';
+  //   $data['histori'] = $this->SetorSampah_model->historisetorbyID();
+  // }
+  public function hapus($id)
+  {
+    $this->Sampah_model->delete($id);
+    $this->session->set_flashdata('flash', 'Account berhasil dihapus.');
+    redirect("Auth/logout");
   }
 }
 

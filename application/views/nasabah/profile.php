@@ -28,7 +28,10 @@
                         <h5 class="text-end-center fw-light mb-1"><?= $nasabah['email']; ?></h5>
                         <p class="text-start-center fw-light mb-1"><?= $nasabah['alamat']; ?></p>
                         <p class="text-end-center fw-light mb-1"><?= $nasabah['jenis_kelamin']; ?></p>
-                        <p class="text-end-center fw-light mb-1"><?= $nasabah['no_hp']; ?></p>
+                        <p class="text-end-center fw-light mb-3"><?= $nasabah['no_hp']; ?></p>
+                        <h5 class="text-end-center fw-light mb-1">Bergabung sejak <?= date('d F Y', strtotime($nasabah['date_created'])); ?></h5>
+
+
                       </div>
                     </div>
                     <!-- Account -->

@@ -69,3 +69,11 @@ $('.tombol-hapus').on('click', function (e) {
         }
     });
 });
+
+function resetFileInput() {
+    // Reset nilai file input
+    document.getElementById('upload').value = '';
+
+    // // Hapus tampilan gambar terpilih
+    // document.getElementById('uploadedAvatar').src = '';
+}

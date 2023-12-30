@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="<?= base_url('assets') ?>/Admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="<?= base_url('assets') ?>/Admin/assets/vendor/libs/apex-charts/apex-charts.css" />
 
-        
+
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -38,7 +38,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="<?= base_url('assets') ?>/Admin/assets/js/config.js"></script>
-    
+
 
 </head>
 
@@ -50,15 +50,14 @@
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo fw-bold">
-                    
-                        <!-- <h1 class="logo me-auto"><a href="<?= base_url('Welcome')?>">TR<i class="fas fa-recycle"></i>SH</a></h1> -->
-                        <h1 class="logo me-auto fw-bold"><a href="<?= base_url('Nasabah')?>">TR<i class="fa fa-recycle"></i>SH</a></h1>
-                    </a>
-
+                    <h1 class="logo me-auto fw-bold">
+                        <a href="<?= base_url('Nasabah') ?>">TR<i class="fa fa-recycle"></i>SH</a>
+                    </h1>
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                         <i class="bx bx-chevron-left bx-sm align-middle"></i>
                     </a>
                 </div>
+
 
                 <div class="menu-inner-shadow"></div>
 
@@ -69,14 +68,14 @@
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Cards</div>
               </a> -->
-                    <li class="menu-item active ">
+                    <li class="menu-item ">
                         <a href="<?= base_url("Nasabah") ?>" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Dashboards">Dashboards</div>
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="<?= base_url("Nasabah/editProfile") ?>" class="menu-link">
+                        <a href="<?= base_url("Nasabah/profile") ?>" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Basic">Account</div>
                         </a>

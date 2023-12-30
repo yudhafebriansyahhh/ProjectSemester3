@@ -10,7 +10,7 @@
                     <h5 class="card-header"><?php echo $judul; ?></h5>
                     <hr>
                     <div class="card-header col-md-6 ">
-                            <a href="<?=base_url('Admin/TambahPoin')?>" class="btn btn-info mb-2 bx bx-plus me-sm-1">tambah Data</a>
+                            <a href="<?=base_url('Admin/TambahPoin')?>" class="btn btn-info mb-2 bx bx-plus me-sm-1"> Tambah Data</a>
 							
 						</div>
                     <div class="table-responsive text-nowrap">
