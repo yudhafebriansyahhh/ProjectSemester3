@@ -15,6 +15,7 @@
                                     <th>Jenis</th>
                                     <th>No HP/ No Rekening</th>
                                     <th>Jumlah Penarikan</th>
+                                    <th>Nama Penerima</th>
                                     <th>Tanggal</th>
                                     <th>Status</th>
 
@@ -29,6 +30,7 @@
                                         <td><?= $transaksi->jenis; ?></td>
                                         <td><?= $transaksi->nomor; ?></td>
                                         <td><?= $transaksi->jumlah_tarik; ?></td>
+                                        <td><?= $transaksi->penerima; ?></td>
                                         <td><?= $transaksi->date; ?></td>
                                         <td>
                                             <?php if ($transaksi->status == "Menunggu Pembayaran") : ?>

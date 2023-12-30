@@ -3,7 +3,7 @@
         <div class="col-lg-8 mb-4 order-1">
             <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
             <div class="card">
-                <form action="<?= base_url('Nasabah/penarikan') ?>" method="post">
+                <form action="<?= base_url('Nasabah/cek_penarikan') ?>" method="post">
                     <h5 class="card-header"><?= $judul; ?></h5>
                     <div class="mb-3 mx-4">
                         <label for="defaultSelect" class="form-label mb-0 col-8">Pilih Metode Pembayaran</label>

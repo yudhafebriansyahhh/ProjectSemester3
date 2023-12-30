@@ -6,6 +6,7 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
+        <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
             <div class="col-lg-8 mb-4 order-1">
                 <div class="card">
 

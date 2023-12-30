@@ -40,7 +40,12 @@ class Nasabah extends CI_Controller
   {
     $data['judul'] = "Halaman Redeem Point";
     $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
-
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/redeem", $data);
+    $this->load->view("layout/layoutNasabah/footer", $data);
+  }
+  public function cek_redeem()
+  {
     // Ambil ID nasabah dari session
     $id = $this->session->userdata('id_nasabah');
 
@@ -56,17 +61,19 @@ class Nasabah extends CI_Controller
     } else {
       $this->session->set_flashdata('flash', 'Gagal menukarkan poin atau poin tidak mencukupi.');
     }
-
-    $this->load->view("layout/layoutNasabah/header", $data);
-    $this->load->view("nasabah/redeem", $data);
-    $this->load->view("layout/layoutNasabah/footer", $data);
+    redirect('Nasabah/redeemPoints');
   }
-
   public function penarikan()
   {
     $data['judul'] = "Halaman Penarikan";
-    $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
 
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/penarikan", $data);
+    $this->load->view("layout/layoutNasabah/footer", $data);
+  }
+
+  public function cek_penarikan()
+  {
     $id = $this->session->userdata('id_nasabah');
 
     $jumlah_tarik = $this->input->post('jumlah_tarik');
@@ -101,38 +108,25 @@ class Nasabah extends CI_Controller
         'date' => date('Y-m-d H:i:s')
       ];
       $this->Transaksi_model->insert($transaksi);
-      // Tambahkan pula log transaksi ke tabel logTransaksi (jika diperlukan)
-      // $this->db->insert('logTransaksi', [
-      //   'id_nasabah' => $id,
-      //   'jenis_transaksi' => 'penarikan',
-      //   'jumlah' => $jumlah_tarik,
-      //   'tanggal' => date('Y-m-d H:i:s')
-      // ]);
-
       // Redirect atau tampilkan pesan sukses
-      $this->session->set_flashdata('flash', ' Penarikan sedang diproses. Mohon Tunggu!');
-      redirect('Nasabah');
+      $this->session->set_flashdata('flash', ' Penarikan sedang diproses, mohon ditunggu!');
     } else {
       // Tampilkan pesan error
       $this->session->set_flashdata('flash', ' Gagal melakukan penarikan atau saldo tidak cukup!');
     }
-
-
-    $this->load->view("layout/layoutNasabah/header", $data);
-    $this->load->view("nasabah/penarikan", $data);
-    $this->load->view("layout/layoutNasabah/footer", $data);
+    redirect('Nasabah');
   }
 
   public function historyTransaksi()
   {
-      $data['judul'] = "Histori Transaksi";
-      $id_nasabah = $this->session->userdata('id_nasabah');
-  
-      $data['histori_transaksi'] = $this->Transaksi_model->getTransaksiByIdNasabah($id_nasabah);
-  
-      $this->load->view("layout/layoutNasabah/header", $data);
-      $this->load->view("nasabah/history_penarikan", $data);  // Gantilah dengan nama view yang sesuai
-      $this->load->view("layout/layoutNasabah/footer", $data);
+    $data['judul'] = "Histori Transaksi";
+    $id_nasabah = $this->session->userdata('id_nasabah');
+
+    $data['histori_transaksi'] = $this->Transaksi_model->getTransaksiByIdNasabah($id_nasabah);
+
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/history_penarikan", $data);  // Gantilah dengan nama view yang sesuai
+    $this->load->view("layout/layoutNasabah/footer", $data);
   }
 }
 

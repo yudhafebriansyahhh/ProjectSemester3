@@ -23,6 +23,14 @@ class Nasabah_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+    public function getByid($id)
+    {
+
+        $this->db->from($this->table);
+        $this->db->where('id_nasabah', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
     public function update($where, $data)
     {
         $this->db->update($this->table, $data, $where);
@@ -69,7 +77,6 @@ class Nasabah_model extends CI_Model
     {
         // Ambil poin dari tabel nasabah
         $currentSaldo = $this->db->select('saldo')->get_where('nasabah', array('id_nasabah' => $id))->row()->saldo;
-
     }
 
     private function calculateSaldoEarned($pointsRedeemed)
@@ -101,6 +108,4 @@ class Nasabah_model extends CI_Model
         $this->db->where('id_nasabah', $id);
         $this->db->update('nasabah', ['saldo' => $new_saldo]);
     }
-
-   
 }

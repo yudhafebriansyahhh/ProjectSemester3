@@ -22,5 +22,8 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<script src="<?= base_url('assets')?>/sweetalert/sweetalert2.all.min.js"></script>
+<script src="<?= base_url("assets")?>/js/myscript.js"></script>
+
 </body>
 </html>
