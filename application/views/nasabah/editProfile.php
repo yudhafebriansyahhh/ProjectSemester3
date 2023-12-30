@@ -12,13 +12,16 @@
                       <a class="nav-link" href="<?= base_url('Nasabah/profile') ?>"><i class="bx bx-user me-1"></i> Profile</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link active" href="<?= base_url('Nasabah/editProfile') ?>"><i class="bx bx-bell me-1"></i> Edit Profile</a>
+                      <a class="nav-link active" href="<?= base_url('Nasabah/editProfile') ?>"><i class="bx bx-edit-alt me-1"></i> Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="<?= base_url('Nasabah/changePassword') ?>"><i class="bx bxs-key me-1"></i> Change Password</a>
                     </li>
 
                     </li>
                   </ul>
                   <div class="card mb-4">
-                    <h5 class="card-header">Profile Details</h5>
+                    <h4 class="card-header"><?= $judul; ?></h4>
                     <!-- Account -->
                     <form action="<?= base_url('Nasabah/updateProfile') ?>" method="post" enctype="multipart/form-data">
                       <div class="card-body">
@@ -74,7 +77,7 @@
                     </form>
                     <!-- /Account -->
                   </div>
-                  <div class="card">
+                  <!-- <div class="card">
                     <h5 class="card-header">Delete Account</h5>
                     <div class="card-body">
                       <div class="mb-3 col-12 mb-0">
@@ -83,15 +86,16 @@
                           <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
                         </div>
                       </div>
-                      <form id="formAccountDeactivation" onsubmit="return false">
+                      <form id="formAccountDeactivation" action="<?= base_url('Nasabah/hapusAccount/' . $nasabah['id_nasabah']) ?>" method="post">
                         <div class="form-check mb-3">
-                          <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation" />
+                          <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation" required />
                           <label class="form-check-label" for="accountActivation">I confirm my account deactivation</label>
                         </div>
                         <button type="submit" class="btn btn-danger deactivate-account tombol-hapus">Deactivate Account</button>
                       </form>
                     </div>
-                  </div>
+                  </div> -->
+
                 </div>
               </div>
             </div>

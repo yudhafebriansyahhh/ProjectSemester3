@@ -79,6 +79,10 @@ class Auth extends CI_Controller
         'alamat' => $this->input->post('alamat'),
         'no_hp' => $this->input->post('no_hp'),
         'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+        'gambar' => 'default.png',
+        'saldo' => '0',
+        'poin' => '0',
+        'date_created' => 'CURRENT_TIMESTAMP',
         'is_active' => 0,
 
 
@@ -100,7 +104,7 @@ class Auth extends CI_Controller
 
 
       $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-    Selamat Akunmu telah berhasil terdaftar, Silahkan Login!</div>');
+    Selamat Akunmu telah berhasil terdaftFar, Silahkan Login!</div>');
       redirect('Auth');
     }
   }
@@ -127,54 +131,49 @@ class Auth extends CI_Controller
 
     if ($type == 'verify') {
       $this->email->subject('Verifikasi Akun Bank Sampah');
-      $this->email->message('Tekan link  dibawah ini untuk verifikasi akun anda :
+      $this->email->message('Terima kasih telah mendaftar di TRASH.
+      Untuk memastikan email Anda benar dan aktif, klik tombol "Verifikasi" di bawah ini :
       <a href="' . base_url() . 'auth/verify?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Verifikasi</a>');
-
     }
 
 
     if ($this->email->send()) {
       return true;
-
     } else {
       echo $this->email->print_debugger();
       die;
     }
-
-
   }
 
   public function verify()
   {
-      $email = $this->input->get('email');
-      $token = $this->input->get('token');
-  
-      $nasabah = $this->db->get_where('nasabah', ['email' => $email])->row_array();
-  
-      if ($nasabah) {
-          $nasabah_token = $this->db->get_where('nasabah_token', ['token' => $token])->row_array();
-  
-         
-              // Update 'is_active' in 'nasabah' table
-              $this->db->set('is_active', 1);
-              $this->db->where('email', $email);
-              $this->db->update('nasabah');
-  
-              // Delete the token from 'Nasabah_token' table
-              $this->db->delete('nasabah_token', ['email' => $email]);
-  
-              // Successful verification message
-              $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Verifikasi akun berhasil!</div>');
-              redirect('Auth');
-          } else {
-              // Incorrect token message
-              $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Token Salah!</div>');
-              redirect('Auth');
-          }
-     
-      
+    $email = $this->input->get('email');
+    $token = $this->input->get('token');
+
+    $nasabah = $this->db->get_where('nasabah', ['email' => $email])->row_array();
+
+    if ($nasabah) {
+      $nasabah_token = $this->db->get_where('nasabah_token', ['token' => $token])->row_array();
+
+
+      // Update 'is_active' in 'nasabah' table
+      $this->db->set('is_active', 1);
+      $this->db->where('email', $email);
+      $this->db->update('nasabah');
+
+      // Delete the token from 'Nasabah_token' table
+      $this->db->delete('nasabah_token', ['email' => $email]);
+
+      // Successful verification message
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Verifikasi akun berhasil!</div>');
+      redirect('Auth');
+    } else {
+      // Incorrect token message
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Token Salah!</div>');
+      redirect('Auth');
+    }
   }
-  
+
   public function cek_login()
   {
     $email = $this->input->post('email');
@@ -195,42 +194,39 @@ class Auth extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Salah!</div>');
         redirect('Auth');
       }
-    }
-
-
-    {
+    } {
       $email = $this->input->post('email');
       $password = $this->input->post('password');
-  
+
       // Check if the user is active
       $nasabah = $this->db->get_where('nasabah', ['email' => $email])->row_array();
-  
+
       if ($nasabah) {
-          // Fetch 'is_active' status
-          $is_active = $nasabah['is_active'];
-  
-          // Authentication logic
-          if ($is_active == 1 && password_verify($password, $nasabah['password'])) {
-              $data = [
-                  'email' => $nasabah['email'],
-                  'id_nasabah' => $nasabah['id_nasabah'],
-              ];
-              $this->session->set_userdata($data);
-              redirect('Nasabah'); // Redirect to the appropriate user page
-          } else {
-              // Password incorrect or user not active
-              $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Salah atau Akun tidak aktif!</div>');
-              redirect('Auth');
-          }
-      } else {
-          // If the user is not found in the 'nasabah' table
-          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email Belum Terdaftar!</div>');
+        // Fetch 'is_active' status
+        $is_active = $nasabah['is_active'];
+
+        // Authentication logic
+        if ($is_active == 1 && password_verify($password, $nasabah['password'])) {
+          $data = [
+            'email' => $nasabah['email'],
+            'id_nasabah' => $nasabah['id_nasabah'],
+          ];
+          $this->session->set_userdata($data);
+          redirect('Nasabah'); // Redirect to the appropriate user page
+        } else {
+          // Password incorrect or user not active
+          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Salah atau Akun tidak aktif!</div>');
           redirect('Auth');
+        }
+      } else {
+        // If the user is not found in the 'nasabah' table
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email Belum Terdaftar!</div>');
+        redirect('Auth');
       }
     }
   }
 
-  
+
 
   public function logout()
   {

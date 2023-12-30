@@ -12,7 +12,10 @@
                       <a class="nav-link active" href="<?= base_url('Nasabah/profile') ?>"><i class="bx bx-user me-1"></i> Profile</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="<?= base_url('Nasabah/editProfile') ?>"><i class="bx bx-bell me-1"></i> Edit Profile</a>
+                      <a class="nav-link" href="<?= base_url('Nasabah/editProfile') ?>"><i class="bx bx-edit-alt me-1"></i> Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="<?= base_url('Nasabah/changePassword') ?>"><i class="bx bxs-key me-1"></i> Change Password</a>
                     </li>
 
                     </li>

@@ -39,6 +39,43 @@ class Nasabah extends CI_Controller
     $this->load->view("layout/layoutNasabah/footer", $data);
   }
 
+  public function changePassword()
+  {
+    $data['judul'] = "Halaman Edit Password";
+    $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
+
+    $this->form_validation->set_rules('currentPassword', 'Current Password', 'required|trim');
+    $this->form_validation->set_rules('newPassword1', 'New Password', 'required|trim|min_length[8]|matches[newPassword2]');
+    $this->form_validation->set_rules('newPassword2', 'Confirm New Password', 'required|trim|min_length[8]|matches[newPassword1]');
+
+    if ($this->form_validation->run() == false) {
+      $this->load->view("layout/layoutNasabah/header", $data);
+      $this->load->view("nasabah/editPassword", $data);
+      $this->load->view("layout/layoutNasabah/footer", $data);
+    } else {
+      $currentPassword = $this->input->post('currentPassword');
+      $newPassword = $this->input->post('newPassword1');
+
+      if (!password_verify($currentPassword, $data['nasabah']['password'])) {
+        $this->session->set_flashdata('flash', 'Gagal, Password salah!');
+        redirect('Nasabah/changePassword');
+      } else {
+        if ($currentPassword == $newPassword) {
+          $this->session->set_flashdata('flash', 'Gagal, Password baru tidak boleh sama dengan password sebelumnya!!');
+          redirect('Nasabah/changePassword');
+        } else {
+          $dataToUpdate = array('password' => password_hash($newPassword, PASSWORD_DEFAULT));
+
+          // Perbarui hanya kolom password
+          $this->Nasabah_model->update(['email' => $this->session->userdata('email')], $dataToUpdate);
+          $this->session->set_flashdata('flash', 'Password berhasil diubah!');
+          redirect('Nasabah/changePassword');
+        }
+      }
+    }
+  }
+
+
   public function updateProfile()
   {
     $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
@@ -187,12 +224,21 @@ class Nasabah extends CI_Controller
   //   $data['judul']='History Penyetoran Sampah';
   //   $data['histori'] = $this->SetorSampah_model->historisetorbyID();
   // }
-  public function hapus($id)
-  {
-    $this->Sampah_model->delete($id);
-    $this->session->set_flashdata('flash', 'Account berhasil dihapus.');
-    redirect("Auth/logout");
-  }
+  #controller
+public function hapusAccount($id)
+{
+    if ($this->input->post('accountActivation')) {
+        // Hapus akun jika checkbox dikonfirmasi
+        $this->Nasabah_model->delete($id);
+        $this->session->set_flashdata('flash', 'Account berhasil dihapus.');
+        redirect("Auth");
+    } else {
+        // Tampilkan pesan bahwa checkbox belum dikonfirmasi
+        $this->session->set_flashdata('flash', 'Silakan konfirmasi penghapusan akun.');
+        redirect("Nasabah/hapus/" . $id);
+    }
+}
+
 }
 
 
