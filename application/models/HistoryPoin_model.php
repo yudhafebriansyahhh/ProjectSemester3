@@ -1,11 +1,28 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Penjemputan_model extends CI_Model
+/**
+ *
+ * Model HisotryPoin_model
+ *
+ * This Model for ...
+ * 
+ * @package		CodeIgniter
+ * @category	Model
+ * @author    Setiawan Jodi <jodisetiawan@fisip-untirta.ac.id>
+ * @link      https://github.com/setdjod/myci-extension/
+ * @param     ...
+ * @return    ...
+ *
+ */
+
+class HistoryPoin_model extends CI_Model
 {
 
-    public $table = 'penjemputan';
-    public $id = 'penjemputan.id_penjemputan';
+    // ------------------------------------------------------------------------
+
+    public $table = 'histori_poin';
+    public $id = 'histori_poin.id_histori';
     public function __construct()
     {
         parent::__construct();
@@ -17,12 +34,11 @@ class Penjemputan_model extends CI_Model
         return $query->result_array();
     }
 
-
     public function getByid($id)
     {
 
         $this->db->from($this->table);
-        $this->db->where('id_sampah', $id);
+        $this->db->where('id_setor', $id);
         $query = $this->db->get();
         return $query->row_array();
     }
@@ -44,10 +60,11 @@ class Penjemputan_model extends CI_Model
         $this->db->delete($this->table);
         return $this->db->affected_rows();
     }
-    public function historipenjemputanbyID($id)
+
+    public function historisetorbyID($id)
     {
-        $this->db->select('nama, alamat, no_hp, status, date');
-        $this->db->from('penjemputan');
+        $this->db->select('poin_awal, transaksi_poin, jenis_transaksi, poin_akhir, date');
+        $this->db->from('histori_poin');
         $this->db->where('id_nasabah', $id);
 
         $query = $this->db->get();
@@ -58,32 +75,10 @@ class Penjemputan_model extends CI_Model
             return array(); // Mengembalikan array kosong jika tidak ada hasil
         }
     }
-    public function countMenungguPenjemputan()
-    {
-        $status = array('Waiting', 'On Progress');
-        $this->db->where_in('status', $status);
-        $query = $this->db->get('penjemputan');
-        return $query->num_rows();
-    }
 
+    // ------------------------------------------------------------------------
 
-    public function getPenjemputan()
-    {
-        $this->db->select('penjemputan.*, nasabah.nama');
-        $this->db->from('penjemputan');
-        $this->db->join('nasabah', 'penjemputan.id_nasabah = nasabah.id_nasabah', 'inner');
-
-        // Eksekusi kueri
-        $query = $this->db->get();
-
-        // Mengembalikan hasil kueri
-        return $query->result();
-    }
-
-    public function updateStatus($id_penjemputan, $status)
-    {
-        $data = array('status' => $status);
-        $this->db->where('id_penjemputan', $id_penjemputan);
-        $this->db->update('penjemputan', $data);
-    }
 }
+
+/* End of file HisotryPoin_model.php */
+/* Location: ./application/models/HisotryPoin_model.php */

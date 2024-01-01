@@ -66,12 +66,20 @@ class Nasabah_model extends CI_Model
             $this->db->where('id_nasabah', $id)->set('saldo', 'saldo + ' . $saldoEarned, false)->update('nasabah');
 
             // Simpan transaksi penukaran poin ke dalam tabel histori
-            // $this->saveTransactionHistory($id, $saldoEarned  , 'Redeem Points');
+            $this->saveTransactionHistory($id, $currentPoints, $pointsToRedeem, 'Redeem');
 
             return true;
         } else {
             return false;
         }
+    }
+    public function getPoinById($id_nasabah)
+    {
+        $this->db->select('poin');
+        $query = $this->db->get_where('nasabah', ['id_nasabah' => $id_nasabah]);
+        $result = $query->row_array();
+
+        return isset($result['poin']) ? $result['poin'] : 0; // Mengembalikan poin atau 0 jika tidak ada data
     }
     public function tarik($id, $jumlahTarik)
     {
@@ -86,17 +94,24 @@ class Nasabah_model extends CI_Model
         return $saldoEarned;
     }
 
-    // private function saveTransactionHistory($userId, $amount, $transactionType)
-    // {
-    //     $data = array(
-    //         'user_id' => $userId,
-    //         'amount' => $amount,
-    //         'transaction_type' => $transactionType,
-    //         'transaction_date' => date('Y-m-d H:i:s'),
-    //     );
+    public function saveTransactionHistory($userId, $currentPoints, $amount, $transactionType)
+    {
+        $point_awal = $currentPoints;
+        if ($transactionType == 'Redeem') {
+            $point_akhir = $point_awal - $amount;
+        } else {
+            $point_akhir = $point_awal + $amount;
+        }
+        $data = array(
+            'poin_awal' => $point_awal,
+            'transaksi_poin' => $amount,
+            'jenis_transaksi' => $transactionType,
+            'poin_akhir' => $point_akhir,
+            'id_nasabah' => $userId
+        );
 
-    //     $this->db->insert('transaction_history', $data);
-    // }
+        $this->db->insert('histori_poin', $data);
+    }
 
     public function get_saldo($id)
     {

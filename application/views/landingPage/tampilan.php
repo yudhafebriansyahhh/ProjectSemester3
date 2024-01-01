@@ -5,7 +5,7 @@
       <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
 
       <div class="carousel-inner" role="listbox">
-
+        <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
         <!-- Slide 1 -->
         <div class="carousel-item active" style="background-image: url(<?= base_url('assets/img/slide/s1.jpg') ?>)">
           <div class="carousel-container">
@@ -62,21 +62,21 @@
           <div class="col-lg-4 col-md-6">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-laptop"></i></div>
-              <h4 class="title"><a href="<?= site_url('welcome/harga')?>">Daftar harga</a></h4>
+              <h4 class="title"><a href="<?= site_url('welcome/harga') ?>">Daftar harga</a></h4>
               <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-briefcase"></i></div>
-              <h4 class="title"><a href="<?= site_url('welcome/point')?>">Point</a></h4>
+              <h4 class="title"><a href="<?= site_url('welcome/point') ?>">Point</a></h4>
               <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-calendar4-week"></i></div>
-              <h4 class="title"><a href=<?= site_url('welcome/jadwal')?>>Jadwal</a></h4>
+              <h4 class="title"><a href=<?= site_url('welcome/jadwal') ?>>Jadwal</a></h4>
               <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur trade stravi</p>
             </div>
           </div>

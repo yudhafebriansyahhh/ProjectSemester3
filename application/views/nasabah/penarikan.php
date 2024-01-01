@@ -46,6 +46,10 @@
                         <label for="defaultFormControlInputDompet" class="form-label mb-0">No Handphone</label>
                         <input type="text" class="form-control" id="defaultFormControlInputDompet" name="nomor_hp" placeholder="Masukkan Nomor Handphone" aria-describedby="defaultFormControlHelp" />
                     </div>
+                    <div class="mb-3 mx-4" >
+                        <label for="defaultSelect" class="form-label mb-0">Nama Penerima</label>
+                        <input type="text" class="form-control" id="namaPenerima" name="namaPenerima" placeholder="Masukkan Nama Penerima" aria-describedby="defaultFormControlHelp" />
+                    </div>
                     <div class="mb-3 mx-4">
                         <label for="JumlahPembayaran" class="form-label mb-0 col-8">Jumlah Penarikan</label>
                         <div class="input-group input-group-merge mb-3 col-8">

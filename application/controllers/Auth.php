@@ -82,7 +82,6 @@ class Auth extends CI_Controller
         'gambar' => 'default.png',
         'saldo' => '0',
         'poin' => '0',
-        'date_created' => 'CURRENT_TIMESTAMP',
         'is_active' => 0,
 
 
@@ -232,8 +231,8 @@ class Auth extends CI_Controller
   {
     $this->session->unset_userdata('email');
     $this->session->unset_userdata('role');
-    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-    Berhasil Logout!</div>');
-    redirect('Auth');
+    $this->session->set_flashdata('flash', 'Berhasil Logout!');
+    redirect('Welcome');
   }
+
 }

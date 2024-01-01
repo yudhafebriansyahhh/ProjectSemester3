@@ -104,6 +104,16 @@
                                 </div>
                             </a>
                         </li>
+                        <li class="menu-item">
+                            <a href="<?= base_url("Admin/konfirmasiPenjemputan") ?>" class="menu-link">
+                                <i class='menu-icon bx bxs-truck'></i></i>
+                                <div data-i18n="Dashboards">Penjemputan
+                                    <?php if ($jumlahMenungguPenjemputan > 0) : ?>
+                                        <span class="badge badge-center rounded-pill bg-label-danger"><?= $jumlahMenungguPenjemputan; ?></span>
+                                    <?php endif; ?>
+                                </div>
+                            </a>
+                        </li>
 
                         <li class="menu-item">
                             <a href="<?= base_url('auth/logout') ?>" target="_blank" class="menu-link">

@@ -9,6 +9,7 @@ class Sampah extends CI_Controller
         parent::__construct();
         $this->load->model('Sampah_model');
         $this->load->model('Transaksi_model');
+        $this->load->model('Penjemputan_model');
     }
 
 
@@ -17,6 +18,7 @@ class Sampah extends CI_Controller
         $data['judul'] = "Data Table Sampah";
         $data['sampah'] = $this->Sampah_model->get();
         $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+        $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
         $this->load->view("layout/layoutAdmin/header",$data);
         $this->load->view('admin/sampah', $data);
         $this->load->view("layout/layoutAdmin/footer",$data);
@@ -27,6 +29,7 @@ class Sampah extends CI_Controller
     public function HalamanTambahSampah()
     {   $data['judul']="Halaman Tambah Data Sampah";
         $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+        $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
         $this->load->view("layout/layoutAdmin/header", $data);
         $this->load->view('admin/tambahsampah', $data); 
         $this->load->view("layout/layoutAdmin/footer",$data);

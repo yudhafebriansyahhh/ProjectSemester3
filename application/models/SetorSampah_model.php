@@ -73,4 +73,17 @@ class SetorSampah_model extends CI_Model
             return array(); // Mengembalikan array kosong jika tidak ada hasil
         }
     }
+    public function getDataByNasabah($id_nasabah)
+    {
+        $this->db->select('sampah.jenis, SUM(setor.berat) as total_berat');
+        $this->db->from('setor');
+        $this->db->join('nasabah', 'nasabah.id_nasabah = setor.id_nasabah');
+        $this->db->join('sampah', 'sampah.id_sampah = setor.id_sampah');
+        $this->db->where('nasabah.id_nasabah', $id_nasabah);
+        $this->db->group_by('sampah.jenis');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 }

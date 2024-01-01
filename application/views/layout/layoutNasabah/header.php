@@ -81,6 +81,12 @@
                         </a>
                     </li>
                     <li class="menu-item">
+                        <a href="<?= base_url("Nasabah/pesanpenjemputan") ?>" class="menu-link">
+                            <i class="menu-icon bx bxs-truck"></i>
+                            <div data-i18n="Basic">Penjemputan</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
                         <a href="<?= base_url("Auth/logout") ?>" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-power-off"></i>
                             <div data-i18n="Basic">Log Out</div>

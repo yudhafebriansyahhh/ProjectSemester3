@@ -11,6 +11,7 @@ class Nasabah extends CI_Controller
     $this->load->model('Transaksi_model');
     $this->load->model('SetorSampah_model');
     $this->load->model('Penjemputan_model');
+    $this->load->model('HistoryPoin_model');
   }
 
   public function index()
@@ -127,9 +128,6 @@ class Nasabah extends CI_Controller
     $this->session->set_flashdata('flash', 'Profil berhasil diperbarui!');
     redirect('Nasabah/editProfile');
   }
-
-
-
   public function redeemPoints()
   {
     $data['judul'] = "Halaman Redeem Point";
@@ -197,9 +195,9 @@ class Nasabah extends CI_Controller
         'metode' => $metode,
         'jenis' => $jenis,
         'nomor' => $nomor,
+        'penerima' => $this->input->post('namaPenerima'),
         'jumlah_tarik' => $jumlah_tarik,
         'status' => 'Menunggu Pembayaran',
-        'date' => 'CURRENT_TIMESTAMP',
       ];
       $this->Transaksi_model->insert($transaksi);
       // Redirect atau tampilkan pesan sukses
@@ -222,10 +220,11 @@ class Nasabah extends CI_Controller
     $this->load->view("nasabah/history_penarikan", $data);  // Gantilah dengan nama view yang sesuai
     $this->load->view("layout/layoutNasabah/footer", $data);
   }
-  // public function historySetor(){
-  //   $data['judul']='History Penyetoran Sampah';
-  //   $data['histori'] = $this->SetorSampah_model->historisetorbyID();
-  // }
+  public function historySetor()
+  {
+    $data['judul'] = 'History Penyetoran Sampah';
+    $data['histori'] = $this->SetorSampah_model->historisetorbyID();
+  }
   #controller
   public function hapusAccount($id)
   {
@@ -260,6 +259,7 @@ class Nasabah extends CI_Controller
       "nama" => $this->input->post("nama"),
       "alamat" => $this->input->post("alamat"),
       "no_hp" => $this->input->post("no_hp"),
+      "status" => "Waiting",
     ];
 
     // Panggil model untuk menyimpan data
@@ -278,6 +278,74 @@ class Nasabah extends CI_Controller
     $this->load->view("nasabah/penjemputan", $data);
     $this->load->view("layout/layoutNasabah/footer", $data);
   }
+  public function resetProfilePicture()
+  {
+    $data = array('gambar' => 'default.png');
+
+    // Panggil model untuk melakukan update
+    $this->Nasabah_model->update(array('id_nasabah' => $this->session->userdata('id_nasabah')), $data);
+
+    // Output respons jika diperlukan
+    $this->session->set_flashdata('flash', 'Photo profile berhasil dihapus.');
+    redirect('Nasabah/editProfile');
+  }
+
+  public function getDataByNasabah()
+  {
+    // Ambil id_nasabah dari session
+    $id_nasabah = $this->session->userdata('id_nasabah');
+
+    if (!$id_nasabah) {
+      // Handle jika id_nasabah tidak tersedia di session (sesuaikan dengan kebutuhan Anda)
+      echo json_encode(['error' => 'ID Nasabah tidak tersedia di session.']);
+      return;
+    }
+
+    $data = $this->SetorSampah_model->getDataByNasabah($id_nasabah);
+
+    // Mengubah struktur data untuk hanya berisi berat
+    $formattedData = array();
+    foreach ($data as $row) {
+      $formattedData[] = (float)$row['total_berat'];
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($formattedData);
+  }
+
+  public function historyPoin()
+  {
+    $id = $this->session->userdata('id_nasabah');
+    $data['judul'] = 'History Poin';
+    $data['histori'] = $this->HistoryPoin_model->historisetorbyID($id);
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/history_poin", $data);
+    $this->load->view("layout/layoutNasabah/footer", $data);
+  }
+  public function historyPenjemputan()
+  {
+    $id = $this->session->userdata('id_nasabah');
+    $data['judul'] = 'History Penjemputan';
+    $data['histori'] = $this->Penjemputan_model->historipenjemputanbyID($id);
+    $this->load->view("layout/layoutNasabah/header", $data);
+    $this->load->view("nasabah/statusPenjemputan", $data);
+    $this->load->view("layout/layoutNasabah/footer", $data);
+  }
+
+  #controller
+  // public function hapusAccount($id)
+  // {
+  //   if ($this->input->post('accountActivation')) {
+  //     // Hapus akun jika checkbox dikonfirmasi
+  //     $this->Nasabah_model->delete($id);
+  //     $this->session->set_flashdata('flash', 'Account berhasil dihapus.');
+  //     redirect("Auth");
+  //   } else {
+  //     // Tampilkan pesan bahwa checkbox belum dikonfirmasi
+  //     $this->session->set_flashdata('flash', 'Silakan konfirmasi penghapusan akun.');
+  //     redirect("Nasabah/hapus/" . $id);
+  //   }
+  // }
 }
 
 

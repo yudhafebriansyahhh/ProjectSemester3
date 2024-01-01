@@ -11,12 +11,14 @@ class Admin extends CI_Controller
     $this->load->model('Sampah_model');
     $this->load->model('SetorSampah_model');
     $this->load->model('Transaksi_model');
+    $this->load->model('Penjemputan_model');
   }
 
 
   public function index()
   {
     $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+    $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
     $this->load->view("layout/layoutAdmin/header",$data);
     $this->load->view("admin/dashboard",$data);
     $this->load->view("layout/layoutAdmin/footer",$data);
@@ -28,6 +30,7 @@ class Admin extends CI_Controller
     $data['admin'] = $this->db->get_where('admin', ['email' => $this->session->userdata('email')])->row_array();
     $data['nasabah'] = $this->Nasabah_model->get();
     $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+    $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
     $this->load->view("layout/layoutAdmin/header", $data);
     $this->load->view("admin/dataUser", $data);
     $this->load->view("layout/layoutAdmin/footer", $data);
@@ -48,6 +51,7 @@ class Admin extends CI_Controller
   {
     $data['nasabah'] = $this->Nasabah_model->getByid($id);
     $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+    $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
     $this->load->view("layout/layoutAdmin/header", $data);
     $this->load->view("admin/editUser", $data);
     $this->load->view("layout/layoutAdmin/footer", $data);
@@ -66,6 +70,7 @@ class Admin extends CI_Controller
     $data['sampah_list'] = $this->Sampah_model->get();     // Mengambil list sampah dari model
     $data['poin'] = $this->SetorSampah_model->getDataPoin();
     $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+    $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
 
     $this->load->view('layout/layoutAdmin/header', $data);
     $this->load->view("admin/insertpoin", $data);
@@ -78,6 +83,7 @@ class Admin extends CI_Controller
     $data['nasabah_list'] = $this->Nasabah_model->get();  // Mengambil list nasabah dari model
     $data['sampah_list'] = $this->Sampah_model->get();     // Mengambil list sampah dari model
     $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+    $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
     $this->load->view('layout/layoutAdmin/header', $data);
     $this->load->view('admin/tambahpoin', $data);
     $this->load->view('layout/layoutAdmin/footer', $data);
@@ -90,7 +96,7 @@ class Admin extends CI_Controller
     $id_sampah = $this->input->post('id_sampah');
     $berat = $this->input->post('berat');
     $id_admin = $this->session->userdata('id_admin');
-
+    $currentPoints = $this->Nasabah_model->getPoinById($id_nasabah);
     // Mengambil data sampah berdasarkan id_sampah
     $sampah = $this->Sampah_model->getByid($id_sampah);
 
@@ -104,8 +110,7 @@ class Admin extends CI_Controller
       'id_sampah' => $id_sampah,
       'id_admin' => $id_admin,
       'berat' => $berat,
-      'poin' => $poin_baru,
-      'date' => 'CURRENT_TIMESTAMP', // Misalnya, tanggal saat ini
+      'poin' => $poin_baru, 
     ];
 
     // Insert data ke dalam tabel insertpoin
@@ -125,6 +130,7 @@ class Admin extends CI_Controller
       ];
 
       $this->Nasabah_model->update(['id_nasabah' => $id_nasabah], $data_nasabah);
+      $this->Nasabah_model->saveTransactionHistory($id_nasabah, $currentPoints, $poin_baru, 'Setor');
 
       // Setelah mengupdate nilai poin, Anda dapat melakukan redirect atau menampilkan pesan sukses
       $this->session->set_flashdata('flash', 'Data berhasil ditambahkan.');
@@ -147,6 +153,7 @@ class Admin extends CI_Controller
     $data['judul'] = "Konfirmasi Pembayaran";
     $data['transaksi'] = $this->Transaksi_model->getTransaksi();
     $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+    $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
     $this->load->view('layout/layoutAdmin/header', $data);
     $this->load->view('admin/konfirmasiPembayaran', $data);
     $this->load->view('layout/layoutAdmin/footer', $data);
@@ -162,5 +169,38 @@ class Admin extends CI_Controller
 
     // Redirect atau tampilkan halaman yang sesuai
     redirect('admin/konfirmasiPembayaran');
+  }
+  public function konfirmasiPenjemputan()
+  {
+    $data['judul'] = "Konfirmasi Penjemputan";
+    $data['jemput'] = $this->Penjemputan_model->getPenjemputan();
+    $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
+    $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
+    $this->load->view('layout/layoutAdmin/header', $data);
+    $this->load->view('admin/konfirmasiPenjemputan', $data);
+    $this->load->view('layout/layoutAdmin/footer', $data);
+  }
+
+  public function prosesPenjemputan($id_penjemputan)
+  {
+    // Panggil method pada model untuk mengubah status menjadi 'Success'
+    $this->Penjemputan_model->updateStatus($id_penjemputan, 'On Progress');
+
+    // Set flashdata untuk memberikan pesan sukses
+    $this->session->set_flashdata('flash', 'Penjemputan sampah berhasil diproses!.');
+
+    // Redirect atau tampilkan halaman yang sesuai
+    redirect('admin/konfirmasiPenjemputan');
+  }
+  public function selesaikanPenjemputan($id_penjemputan)
+  {
+    // Panggil method pada model untuk mengubah status menjadi 'Success'
+    $this->Penjemputan_model->updateStatus($id_penjemputan, 'Done');
+
+    // Set flashdata untuk memberikan pesan sukses
+    $this->session->set_flashdata('flash', 'Sampah telah selesai dijemput.');
+
+    // Redirect atau tampilkan halaman yang sesuai
+    redirect('admin/konfirmasiPenjemputan');
   }
 }
