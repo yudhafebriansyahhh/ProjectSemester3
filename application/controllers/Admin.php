@@ -22,9 +22,9 @@ class Admin extends CI_Controller
     $data['jmlhNasabah'] = $this->Nasabah_model->countNasabah();
     $data['jmlhSampahOrganik'] = $this->SetorSampah_model->jumlahBeratSampahOrganik();
     $data['jmlhSampahAnorganik'] = $this->SetorSampah_model->jumlahBeratSampahAnorganik();
-    $this->load->view("layout/layoutAdmin/header",$data);
-    $this->load->view("admin/dashboard",$data);
-    $this->load->view("layout/layoutAdmin/footer",$data);
+    $this->load->view("layout/layoutAdmin/header", $data);
+    $this->load->view("admin/dashboard", $data);
+    $this->load->view("layout/layoutAdmin/footer", $data);
   }
 
   public function userData()
@@ -113,7 +113,7 @@ class Admin extends CI_Controller
       'id_sampah' => $id_sampah,
       'id_admin' => $id_admin,
       'berat' => $berat,
-      'poin' => $poin_baru, 
+      'poin' => $poin_baru,
     ];
 
     // Insert data ke dalam tabel insertpoin
@@ -205,5 +205,11 @@ class Admin extends CI_Controller
 
     // Redirect atau tampilkan halaman yang sesuai
     redirect('admin/konfirmasiPenjemputan');
+  }
+  public function hapusNasabah($id)
+  {
+    $this->Nasabah_model->delete($id);
+    $this->session->set_flashdata('flash', 'Data berhasil dihapus.');
+    redirect("Admin/userData");
   }
 }

@@ -78,4 +78,6 @@ class Sampah extends CI_Controller
         redirect("Sampah");
     }
 
+    
+
 }

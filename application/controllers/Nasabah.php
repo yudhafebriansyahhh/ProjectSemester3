@@ -342,6 +342,8 @@ class Nasabah extends CI_Controller
     redirect('Nasabah/editProfile');
   }
 
+ 
+
 
   #controller
   // public function hapusAccount($id)
