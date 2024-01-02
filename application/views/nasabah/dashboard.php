@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <span>Poin</span>
-                                <h3 class="card-title text-nowrap mb-1"><?= ($nasabah['poin']); ?></h3>
+                                <h4 class="card-title text-nowrap mb-1"><?= ($nasabah['poin']); ?></h4>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                                 <span>Saldo</span>
-                                <h3 class="card-title text-nowrap mb-1">Rp. <?= number_format($nasabah['saldo']); ?> ,-</h3>
+                                <h4 class="card-title text-nowrap mb-1">Rp. <?= number_format($nasabah['saldo']); ?> ,-</h4>
                             </div>
                         </div>
                     </div>  
