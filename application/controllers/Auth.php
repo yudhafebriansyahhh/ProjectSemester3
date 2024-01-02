@@ -79,9 +79,6 @@ class Auth extends CI_Controller
         'alamat' => $this->input->post('alamat'),
         'no_hp' => $this->input->post('no_hp'),
         'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-        'gambar' => 'default.png',
-        'saldo' => '0',
-        'poin' => '0',
         'is_active' => 0,
 
 
@@ -103,7 +100,7 @@ class Auth extends CI_Controller
 
 
       $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-    Selamat Akunmu telah berhasil terdaftFar, Silahkan Login!</div>');
+    Selamat Akunmu telah berhasil terdaftar, Silahkan Login!</div>');
       redirect('Auth');
     }
   }
@@ -130,9 +127,12 @@ class Auth extends CI_Controller
 
     if ($type == 'verify') {
       $this->email->subject('Verifikasi Akun Bank Sampah');
-      $this->email->message('Terima kasih telah mendaftar di TRASH.
-      Untuk memastikan email Anda benar dan aktif, klik tombol "Verifikasi" di bawah ini :
+      $this->email->message('Tekan link  dibawah ini untuk verifikasi akun anda :
       <a href="' . base_url() . 'auth/verify?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Verifikasi</a>');
+    } else if ($type == 'forgot') {
+      $this->email->subject('Reset Password');
+      $this->email->message('Tekan link  dibawah ini untuk reset password akun anda :
+      <a href="' . base_url() . 'auth/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Reset Password</a>');
     }
 
 
@@ -143,6 +143,30 @@ class Auth extends CI_Controller
       die;
     }
   }
+
+  public function resetpassword()
+  {
+    $email = $this->input->get('email');
+    $token = $this->input->get('token');
+
+    $nasabah = $this->db->get_where('nasabah', ['email' => $email])->row_array();
+
+    if ($nasabah) {
+      $Nasabah_token = $this->db->get_where('Nasabah_token', ['token' => $token])->row_array();
+
+      if ($Nasabah_token) {
+        $this->session->set_userdata('reset_email', $email);
+        $this->changePassword();
+      } else {
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Reset Password Failled! Wrong token.</div>');
+        redirect('Auth/index');
+      }
+    } else {
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Reset Password Failled! Wrong email.</div>');
+      redirect('Auth/index');
+    }
+  }
+
 
   public function verify()
   {
@@ -171,6 +195,64 @@ class Auth extends CI_Controller
       $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Token Salah!</div>');
       redirect('Auth');
     }
+  }
+  public function forgotPassword()
+  {
+    $this->form_validation->set_rules('Email', 'email', 'trim|require|valid_email');
+    if ($this->form_validation->run() == false) {
+
+      $this->load->view("layout/auth/auth_header");
+      $this->load->view("auth/forgotpassword");
+      $this->load->view("layout/auth/auth_footer");
+    } else {
+      $email = $this->input->post('email');
+      $nasabah = $this->db->get_where('nasabah', ['email' => $email, 'is_active' => 1])->row_array();
+
+      if ($nasabah) {
+        $token = base64_encode(random_bytes(32));
+        $Nasabah_token = [
+          'email' => $email,
+          'token' => $token,
+
+
+        ];
+
+        $this->db->insert('Nasabah_token', $Nasabah_token);
+        $this->_sendEmail($token, 'forgot');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Please check your email to reset your password!</div>');
+        redirect('Auth/forgotpassword');
+      } else {
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email is not registered or activated!</div>');
+        redirect('Auth/forgotpassword');
+      }
+    }
+    // $email = $this->input->get('email');
+    // $token = $this->input->get('token');
+
+    // $nasabah = $this->db->get_where('nasabah', ['email' => $email])->row_array();
+
+    // if ($nasabah) {
+    //     $nasabah_token = $this->db->get_where('nasabah_token', ['token' => $token])->row_array();
+
+
+    //         // Update 'is_active' in 'nasabah' table
+    //         $this->db->set('is_active', 1);
+    //         $this->db->where('email', $email);
+    //         $this->db->update('nasabah');
+
+    //         // Delete the token from 'Nasabah_token' table
+    //         $this->db->delete('nasabah_token', ['email' => $email]);
+
+    //         // Successful verification message
+    //         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Verifikasi akun berhasil!</div>');
+    //         redirect('Auth');
+    //     } else {
+    //         // Incorrect token message
+    //         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Token Salah!</div>');
+    //         redirect('Auth');
+    //     }
+
+
   }
 
   public function cek_login()
@@ -226,13 +308,37 @@ class Auth extends CI_Controller
   }
 
 
-
   public function logout()
   {
     $this->session->unset_userdata('email');
     $this->session->unset_userdata('role');
-    $this->session->set_flashdata('flash', 'Berhasil Logout!');
-    redirect('Welcome');
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+    Berhasil Logout!</div>');
+    redirect('Auth');
   }
+  public function changePassword()
+  {
+    if (!$this->session->userdata('reset_email')) {
+      redirect('Auth');
+    }
 
+    $this->form_validation->set_rules('password1', 'password', 'trim|required|min_length[8]|matches[password2]');
+    $this->form_validation->set_rules('password2', 'repeat password', 'trim|required|min_length[8]|matches[password1]');
+
+    if ($this->form_validation->run() == false) {
+      $this->load->view("layout/auth/auth_header");
+      $this->load->view("auth/change_password");
+      $this->load->view("layout/auth/auth_footer");
+    } else {
+      $password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
+      $email = $this->session->userdata('reset_email');
+      $this->db->set('password', $password);
+      $this->db->where('email', $email);
+      $this->db->update('nasabah');
+
+      $this->session->unset_userdata('reset_email');
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Password has been change! Please login.</div>');
+      redirect('Auth');
+    }
+  }
 }

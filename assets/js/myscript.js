@@ -17,6 +17,24 @@ document.addEventListener('DOMContentLoaded', function () {
             text: flashdata
         });
     }
+    //tombol hapus
+    $('.tombol-hapus').on('click', function (e) {
+        e.preventDefault();
+        const href = $(this).attr('href');
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.value) {
+                document.location.href = href;
+            }
+        });
+    });
 
     var metodePembayaranSelect = document.getElementById('defaultSelect');
     var bankFormElements = document.querySelectorAll('.bank-form');
@@ -46,31 +64,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-
-    //tombol hapus
-    $('.tombol-hapus').on('click', function (e) {
-        e.preventDefault();
-        const href = $(this).attr('href');
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.value) {
-                document.location.href = href;
-            }
-        });
-    });
-
-    function resetFileInput() {
-        // Reset nilai file input
-        document.getElementById('upload').value = '';
-
-        // // Hapus tampilan gambar terpilih
-        // document.getElementById('uploadedAvatar').src = '';
-    }
 });
+
+
+
+function resetFileInput() {
+    // Reset nilai file input
+    document.getElementById('upload').value = '';
+
+    // // Hapus tampilan gambar terpilih
+    // document.getElementById('uploadedAvatar').src = '';
+}

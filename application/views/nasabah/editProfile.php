@@ -34,13 +34,11 @@
                                 <input type="file" name="profile_picture" class="form-control" id="upload" accept="image/png, image/jpeg" />
                               </div>
                               <div class="col-sm-5 d-flex align-items-center">
-                                <button type="button" class="btn btn-outline-secondary account-image-reset mb-4" onclick="resetFileInput('reset')">
-                                  <i class="bx bx-reset d-block d-sm-none"></i>
-                                  <span class="d-none d-sm-block">Reset</span>
-                                </button>
+                                <a href="<?= base_url('Nasabah/deleteProfilePicture/' . $id); ?>" class="tombol-hapus mb-4 btn btn-outline-secondary ">Reset</a>
 
                                 <p class="text-muted mb-0 ms-3">Allowed JPG, GIF or PNG. Max size of 2048K</p>
                               </div>
+
                             </div>
                           </div>
                         </div>

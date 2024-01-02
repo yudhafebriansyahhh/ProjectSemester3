@@ -17,6 +17,7 @@ class Nasabah extends CI_Controller
   public function index()
   {
     $data['judul'] = 'Dashboard';
+    
     $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
     $id = $this->session->userdata('id_nasabah');
     $data['histori'] = $this->SetorSampah_model->historisetorbyID($id);
@@ -37,6 +38,7 @@ class Nasabah extends CI_Controller
   {
     $data['judul'] = "Halaman Edit Profile";
     $data['nasabah'] = $this->db->get_where('nasabah', ['email' => $this->session->userdata('email')])->row_array();
+    $data['id'] = $this->session->userdata('id_nasabah');
     $this->load->view("layout/layoutNasabah/header", $data);
     $this->load->view("nasabah/editProfile", $data);
     $this->load->view("layout/layoutNasabah/footer", $data);
@@ -77,7 +79,6 @@ class Nasabah extends CI_Controller
       }
     }
   }
-
 
   public function updateProfile()
   {
@@ -278,17 +279,6 @@ class Nasabah extends CI_Controller
     $this->load->view("nasabah/penjemputan", $data);
     $this->load->view("layout/layoutNasabah/footer", $data);
   }
-  public function resetProfilePicture()
-  {
-    $data = array('gambar' => 'default.png');
-
-    // Panggil model untuk melakukan update
-    $this->Nasabah_model->update(array('id_nasabah' => $this->session->userdata('id_nasabah')), $data);
-
-    // Output respons jika diperlukan
-    $this->session->set_flashdata('flash', 'Photo profile berhasil dihapus.');
-    redirect('Nasabah/editProfile');
-  }
 
   public function getDataByNasabah()
   {
@@ -331,6 +321,27 @@ class Nasabah extends CI_Controller
     $this->load->view("nasabah/statusPenjemputan", $data);
     $this->load->view("layout/layoutNasabah/footer", $data);
   }
+
+  public function deleteProfilePicture()
+  {
+    $id = $this->session->userdata('id_nasabah');
+    $old_image = $this->session->userdata('gambar');
+
+    if ($old_image != 'default.png') {
+      $file_path = FCPATH . '/assets/img/profile/' . $old_image;
+
+      // Check if the file exists before attempting to unlink
+      if (file_exists($file_path)) {
+        unlink($file_path);
+      }
+    }
+
+    $this->Nasabah_model->resetProfile($id);
+
+    $this->session->set_flashdata('flash', 'Photo profile berhasil dihapus.');
+    redirect('Nasabah/editProfile');
+  }
+
 
   #controller
   // public function hapusAccount($id)

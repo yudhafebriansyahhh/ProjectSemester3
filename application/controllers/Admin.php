@@ -19,6 +19,9 @@ class Admin extends CI_Controller
   {
     $data['jumlahMenungguPembayaran'] = $this->Transaksi_model->countMenungguPembayaran();
     $data['jumlahMenungguPenjemputan'] = $this->Penjemputan_model->countMenungguPenjemputan();
+    $data['jmlhNasabah'] = $this->Nasabah_model->countNasabah();
+    $data['jmlhSampahOrganik'] = $this->SetorSampah_model->jumlahBeratSampahOrganik();
+    $data['jmlhSampahAnorganik'] = $this->SetorSampah_model->jumlahBeratSampahAnorganik();
     $this->load->view("layout/layoutAdmin/header",$data);
     $this->load->view("admin/dashboard",$data);
     $this->load->view("layout/layoutAdmin/footer",$data);

@@ -86,4 +86,25 @@ class SetorSampah_model extends CI_Model
 
         return $query->result_array();
     }
+
+    public function jumlahBeratSampahOrganik()
+    {
+        $this->db->select_sum('setor.berat');
+        $this->db->from('setor');
+        $this->db->join('sampah', 'sampah.id_sampah = setor.id_sampah');
+        $this->db->where('sampah.jenis', 'Organik');
+
+        $query = $this->db->get();
+        return $query->row()->berat;
+    }
+    public function jumlahBeratSampahAnorganik()
+    {
+        $this->db->select_sum('setor.berat');
+        $this->db->from('setor');
+        $this->db->join('sampah', 'sampah.id_sampah = setor.id_sampah');
+        $this->db->where('sampah.jenis', 'Anorganik');
+
+        $query = $this->db->get();
+        return $query->row()->berat;
+    }
 }

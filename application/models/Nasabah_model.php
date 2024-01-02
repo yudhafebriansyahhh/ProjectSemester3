@@ -81,11 +81,6 @@ class Nasabah_model extends CI_Model
 
         return isset($result['poin']) ? $result['poin'] : 0; // Mengembalikan poin atau 0 jika tidak ada data
     }
-    public function tarik($id, $jumlahTarik)
-    {
-        // Ambil poin dari tabel nasabah
-        $currentSaldo = $this->db->select('saldo')->get_where('nasabah', array('id_nasabah' => $id))->row()->saldo;
-    }
 
     private function calculateSaldoEarned($pointsRedeemed)
     {
@@ -122,5 +117,17 @@ class Nasabah_model extends CI_Model
     {
         $this->db->where('id_nasabah', $id);
         $this->db->update('nasabah', ['saldo' => $new_saldo]);
+    }
+
+    public function resetProfile($id)
+    {
+        $this->db->where('id_nasabah', $id);
+        $this->db->update('nasabah', ['gambar' => 'default.png']);
+    }
+
+    public function countNasabah()
+    {
+        $query = $this->db->get('nasabah');
+        return $query->num_rows();
     }
 }
